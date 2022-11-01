@@ -2,7 +2,8 @@
 echo 'Hello World'
 echo $@
 
-LOGIN_USERNAME='test-ojt6na8ivhjm@example.com'
+userDetails=$(sfdx force:org:create -f config/project-scratch-def.json -a $@ -s --json -d 1 -w 10)
+LOGIN_USERNAME=$(echo $userDetails | jq -r .result.username)
 
 # Generate password
 sfdx force:user:password:generate --targetusername $LOGIN_USERNAME
